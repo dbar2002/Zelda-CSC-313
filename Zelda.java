@@ -122,6 +122,39 @@ public class Zelda {
                     }
                 }
             }
+
+            xdimTC = 9; //7; // TODO: need to be able to just use 7 and 6, not 9 and 8 .
+            ydimTC = 8; //6
+            backgroundTC = new Vector< Vector < BufferedImage>>();
+
+            for(int i = 0; i < ydimTC; i++){
+                Vector<BufferedImage> temp = new Vector<BufferedImage>();
+                for(int j = 0; j < xdimTC; j++){
+                    BufferedImage tempImg = ImageIO.read(new File("blank.png"));
+                    temp.addElement(tempImg);
+                }
+                backgroundTC.addElement(temp);
+            }
+            for (int i = 0; i < backgroundTC.size(); i++){
+                for (int j = 0; j < backgroundTC.elementAt(i).size(); j++){
+                    if ((j == 0 && i == 2) || (j == 0 && i == 3) || (j == 0 && i == 4) || (j == 1 && i == 1) || (j == 1 && i == 3) || (j == 1 && i == 5) || (j == 2 && i == 1) || (j == 2 && i == 2) ||
+                            (j == 2 && i == 3) || (j == 2 && i == 4) || (j == 2 && i == 5) || (j == 2 && i == 6) || (j == 3 && i == 1) || (j == 3 && i == 2) || (j == 3 && i == 3) || (j == 3 && i == 4) ||
+                            (j == 3 && i == 5) || (j == 4 && i == 2) || (j == 4 && i == 3) || (j == 4 && i == 4) || (j == 5 && i == 2) || (j == 5 && i == 3) || (j == 6 && i == 0 ) || (j == 6 && i == 1) ||
+                            (j == 6 && i == 2) || (j == 6 && i ==3)) {
+                        String filename = "TC";
+                        if (j < 10){
+                            filename = filename + "0";
+                        }
+                        filename = filename + j;
+                        if ( i < 10 )
+                        {
+                            filename = filename + "O";
+                        }
+                        filename = filename + i + ". png";
+                        //System.out.println ( filename ) ;
+                    }
+                }
+            }
         }
     }
     private static Boolean endgame;
