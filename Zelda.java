@@ -42,7 +42,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-public class ZeldaMain {
+public class Zelda {
 
     public void Zelda() {
         setup();
@@ -77,7 +77,7 @@ public class ZeldaMain {
             for (int i = 0; i < ydimKI; i++) {
                 Vector<BufferedImage> temp = new Vector<>();
                 for (int j = 0; j < xdimKI; j++) {
-                    BufferedImage tempImg = ImageIO.read(new File("blank.png"));
+                    BufferedImage tempImg = ImageIO.read(new File("images/map.png"));
                     temp.addElement(tempImg);
                 }
                 backgroundKI.addElement(temp);
@@ -183,7 +183,7 @@ public class ZeldaMain {
                 }
                 wallsTC.add(temp);
             }
-            player = ImageIO.read(new File("link00.png"));
+            player = ImageIO.read(new File("images/sprite.png"));
 
             link = new Vector<BufferedImage>();
             for (int i = 0; i < 72; i++) {
@@ -209,11 +209,11 @@ public class ZeldaMain {
 
             bubblebossEnemies = new Vector<ImageObject>();
 
-            leftHeartOutline = ImageIO.read(new File("heartOutlineLeft.png"));
-            rightHeartOutline = ImageIO.read(new File("heartOutlineRight.png"));
+            //leftHeartOutline = ImageIO.read(new File("heartOutlineLeft.png"));
+            //rightHeartOutline = ImageIO.read(new File("heartOutlineRight.png"));
 
-            leftHeart = ImageIO.read(new File("heartLeft"));
-            rightHeart = ImageIO.read(new File("heartRight"));
+            leftHeart = ImageIO.read(new File("images/halfheart.png"));
+            rightHeart = ImageIO.read(new File("images/full_heart.png"));
 
         } catch (IOException ioe) {
 
@@ -648,7 +648,7 @@ public class ZeldaMain {
         // page 128
         Graphics g = appFrame.getGraphics();
         Graphics2D g2D = (Graphics2D) g;
-//        g2D.drawImage(rotateImageObject(p1).filter(player, null), (int)(p1.getX() + 0.5), (int)(p1.getY()+ 0.5), null);
+        g2D.drawImage(rotateImageObject(p1).filter(player, null), (int)(p1.getX() + 0.5), (int)(p1.getY()+ 0.5), null);
         if (upPressed || downPressed || leftPressed || rightPressed) {
             if (upPressed == true) {
                 if (p1.getCurrentFrame() == 0) {
