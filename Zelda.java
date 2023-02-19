@@ -44,16 +44,12 @@ import javax.sound.sampled.Clip;
 
 public class Zelda {
 
-    public void Zelda() {
-        setup();
-    }
-
     public static void setup() {
         appFrame = new JFrame("The Legend of Zelda: Link's Awakening");
         XOFFSET = 0;
-        YOFFSET = 40;
-        WINWIDTH = 338;
-        WINHEIGHT = 271;
+        YOFFSET = 30;
+        WINWIDTH = 196;
+        WINHEIGHT = 174;
         pi = 3.14159265358979;
         quarterPi = 0.25 * pi;
         halfPi = 0.5 * pi;
@@ -134,19 +130,25 @@ public class Zelda {
 //                    }
 //                }
 //            }
-            xdimTC = 9;
-            ydimTC = 8;
-//            backgroundTC = new Vector<Vector<BufferedImage>>();
-//            for (int i = 0; i < ydimTC; i++) {
-//                Vector<BufferedImage> temp = new Vector<>();
-//                for (int j = 0; j < xdimTC; j++) {
-//                    BufferedImage tempImg = ImageIO.read(new File("blank.png"));
-//                    temp.addElement(tempImg);
-//
-//                }
-//                backgroundTC.addElement(temp);
-//            }
-//
+            xdimTC = 2;
+            ydimTC = 2;
+            backgroundTC = new Vector<Vector<BufferedImage>>();
+
+            //Just initializing blanks to all non-implemented squares
+            for (int i = 0; i < ydimTC; i++) {
+                Vector<BufferedImage> temp = new Vector<>();
+                for (int j = 0; j < xdimTC; j++) {
+                    BufferedImage tempImg = ImageIO.read(new File("images/blank.png"));
+                    temp.addElement(tempImg);
+
+                }
+                backgroundTC.addElement(temp);
+            }
+
+            backgroundTC.elementAt(0).set(1, ImageIO.read(new File("images/TC10.png")));
+            backgroundTC.elementAt(1).set(1, ImageIO.read(new File("images/TC11.png")));
+
+
 //            for (int i = 0; i < backgroundTC.size(); i++) {
 //                for (int j = 0; j < backgroundTC.elementAt(i).size(); j++) {
 //                    if ((j == 0 && i == 2) || (j == 0 && i == 3) || (j == 0 && i
@@ -185,7 +187,7 @@ public class Zelda {
 //                }
 //                wallsTC.add(temp);
 //            }
-            player = ImageIO.read(new File("images/characterspritefront.png"));
+            player = ImageIO.read(new File("images/characterspritewalkleft.png"));
             //TODO: Player needs to become a vector with different animations as each element.
 
 //            link = new Vector<BufferedImage>();
@@ -216,7 +218,8 @@ public class Zelda {
             rightHeart = ImageIO.read(new File("images/full_heart.png"));
 
         } catch (IOException ioe) {
-
+            System.out.println("Error loading images");
+            ioe.printStackTrace();
         }
     }
 
@@ -226,7 +229,7 @@ public class Zelda {
                 backgroundDraw();
                 //enemiesDraw();
                 playerDraw();
-                healthDraw();
+                //healthDraw();
 
                 try {
                     Thread.sleep(32);
@@ -632,7 +635,6 @@ public class Zelda {
         Graphics2D g2D = (Graphics2D) g;
 
         //TODO: Need to initialize background vector
-
 //        if (backgroundState.substring(0, 2).equals("KI")) {
 //            int i = Integer.parseInt(backgroundState.substring(4, 6));
 //            int j = Integer.parseInt(backgroundState.substring(2, 4));
@@ -642,10 +644,12 @@ public class Zelda {
 //                }
 //            }
 //        }
-//
+
+        g2D.drawImage(backgroundTC.elementAt(0).elementAt(1), XOFFSET, YOFFSET, null);
+
 //        if (backgroundState.substring(0, 2).equals("TC")) {
-//            int i = Integer.parseInt(backgroundState.substring(4, 6));
-//            int j = Integer.parseInt(backgroundState.substring(2, 4));
+//            int i = Integer.parseInt(backgroundState.substring(2, 3));
+//            int j = Integer.parseInt(backgroundState.substring(3));
 //            if (i < backgroundTC.size()) {
 //                if (j < backgroundTC.elementAt(i).size()) {
 //                    g2D.drawImage(backgroundTC.elementAt(i).elementAt(j), XOFFSET, YOFFSET, null);
@@ -693,20 +697,21 @@ public class Zelda {
                 }
                 p1.updateCurrentFrame();
             }
-        } else {
-            if (Math.abs(lastPressed - 90) < 1) {
-                g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(4), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
-            }
-            if (Math.abs(lastPressed - 270) < 1) {
-                g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(2), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
-            }
-            if (Math.abs(lastPressed - 0) < 1) {
-                g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(6), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
-            }
-            if (Math.abs(lastPressed - 180) < 1) {
-                g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(0), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
-            }
         }
+//        else {
+//            if (Math.abs(lastPressed - 90) < 1) {
+//                g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(4), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
+//            }
+//            if (Math.abs(lastPressed - 270) < 1) {
+//                g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(2), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
+//            }
+//            if (Math.abs(lastPressed - 0) < 1) {
+//                g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(6), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
+//            }
+//            if (Math.abs(lastPressed - 180) < 1) {
+//                g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(0), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
+//            }
+//        }
 
         //d2D.drawImage(rotateImageObject(p1).filter(player, null), (int)(p1.getX() + 0.5), (int)(p1.getY() + 0.5), null);
     }
@@ -914,7 +919,7 @@ public class Zelda {
             xPressed = false;
             lastPressed = 90.0;
             //TODO: Initial state
-            backgroundState = "KI0809";
+            backgroundState = "TC10";
             availableToDropLife = true;
             try {
                 //clearEnemies();
@@ -936,8 +941,8 @@ public class Zelda {
                 Thread.sleep(50);
             } catch (InterruptedException ie) {
             }
-            lastAudioStart = System.currentTimeMillis();
-            playAudio(backgroundState);
+//            lastAudioStart = System.currentTimeMillis();
+//            playAudio(backgroundState);
             endgame = false;
             lastDropLife = System.currentTimeMillis();
             Thread t1 = new Thread(new Animate());
@@ -1330,7 +1335,7 @@ public class Zelda {
     public static void main(String[] args) {
         setup();
         appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        appFrame.setSize(WINWIDTH + 1, WINHEIGHT + 85);
+        appFrame.setSize(WINWIDTH + 10, WINHEIGHT + 85);
         JPanel myPanel = new JPanel();
         /*
         St r ing[]levels=f ”One” , ”Two” , ”Three ” , ”Four ” , ” Five ” , ” Six ” , ”
@@ -1340,7 +1345,7 @@ public class Zelda {
         levelMenu.addActionListener(new GameLevel());
         myPanel.add(levelMenu);
         */
-        JButton quitButton = new JButton(" Select ");
+        JButton quitButton = new JButton(" Quit ");
         quitButton.addActionListener(new QuitGame());
         myPanel.add(quitButton);
         JButton newGameButton = new JButton(" Start ");
