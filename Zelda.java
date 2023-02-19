@@ -77,7 +77,7 @@ public class Zelda {
             for (int i = 0; i < ydimKI; i++) {
                 Vector<BufferedImage> temp = new Vector<>();
                 for (int j = 0; j < xdimKI; j++) {
-                    BufferedImage tempImg = ImageIO.read(new File("images/map.png"));
+                    BufferedImage tempImg = ImageIO.read(new File("images/zeldamap.png"));
                     temp.addElement(tempImg);
                 }
                 backgroundKI.addElement(temp);
@@ -544,26 +544,32 @@ public class Zelda {
                         playAudio(backgroundState);
                     }
                 }
-
-                // check player and enemies against walls
-                if (backgroundState.substring(0, 6).equals("KI0510")) {
-                    checkMoversAgainstWalls(wallsKI.elementAt(5).elementAt(10));
-                }
-                if (backgroundState.substring(0, 6).equals("KI0809")) {
-                    checkMoversAgainstWalls(wallsKI.elementAt(8).elementAt(9));
-                }
-
+try {
+    // check player and enemies against walls
+    if (backgroundState.substring(0, 6).equals("KI0510")) {
+        checkMoversAgainstWalls(wallsKI.elementAt(5).elementAt(10));
+    }
+    if (backgroundState.substring(0, 6).equals("KI0809")) {
+        checkMoversAgainstWalls(wallsKI.elementAt(8).elementAt(9));
+    }
+} catch (java.lang.NullPointerException e){
+    System.out.println(e);
+}
                 // check player against enemies
-                for (int i = 0; i < bluepigEnemies.size(); i++) {
-                    if (collisionOccurs(p1, bluepigEnemies.elementAt(i))) {
-                        //System.out.println("Still Colliding: " + i + ", " + System.currentTimeMillis() );
-                        p1.setBounce(true);
-                        bluepigEnemies.elementAt(i).setBounce(true);
-                        if (availableToDropLife) {
-                            p1.setDropLife(1);
+                try {
+                    for (int i = 0; i < bluepigEnemies.size(); i++) {
+                        if (collisionOccurs(p1, bluepigEnemies.elementAt(i))) {
+                            //System.out.println("Still Colliding: " + i + ", " + System.currentTimeMillis() );
+                            p1.setBounce(true);
+                            bluepigEnemies.elementAt(i).setBounce(true);
+                            if (availableToDropLife) {
+                                p1.setDropLife(1);
+                            }
                         }
                     }
-                }
+                } catch (java.lang.NullPointerException e){
+                System.out.println(e);
+            }
 
                 //todo: check enemies against walls
 
@@ -648,8 +654,10 @@ public class Zelda {
         // page 128
         Graphics g = appFrame.getGraphics();
         Graphics2D g2D = (Graphics2D) g;
-        g2D.drawImage(rotateImageObject(p1).filter(player, null), (int)(p1.getX() + 0.5), (int)(p1.getY()+ 0.5), null);
-        if (upPressed || downPressed || leftPressed || rightPressed) {
+
+        System.out.println(p1.getX());
+        //g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(0), null), 25,25), null);
+       /* if (upPressed || downPressed || leftPressed || rightPressed) {
             if (upPressed == true) {
                 if (p1.getCurrentFrame() == 0) {
                     g2D.drawImage(rotateImageObject(p1).filter(link.elementAt(4), null), (int) (p1.getX() + 0.5), (int) (p1.getY() + 0.5), null);
@@ -697,7 +705,7 @@ public class Zelda {
             }
         }
 
-        //d2D.drawImage(rotateImageObject(p1).filter(player, null), (int)(p1.getX() + 0.5), (int)(p1.getY() + 0.5), null);
+      */  //d2D.drawImage(rotateImageObject(p1).filter(player, null), (int)(p1.getX() + 0.5), (int)(p1.getY() + 0.5), null);
     }
 
     private static void healthDraw() {
